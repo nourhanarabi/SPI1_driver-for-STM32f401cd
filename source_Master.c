@@ -1,6 +1,13 @@
 #include"Header_Master.h"
 
-
+          /*
+            **Description:
+               * This function used first to implement the intial condition for SPI1
+            **Parameters:
+               * No parameters used in this function
+            **Return Value:
+               * No Returned Value 
+          */
 void Init_SPI (void)
 {
    RCC_AHB1ENR |= (1<<0)  ;       //enable clock port A
@@ -43,11 +50,14 @@ void Init_SPI (void)
 }
 
 
-/*
-* the function determine the first bit wanted to transfer  MSB or LSB
-* the parameter:  INPUT one (byteOrder)
-*No Returned data
-*/
+       /*
+            **Description:
+               * This function used to select the first bit will transfer (MSB)or (LSB)
+            **Parameters:
+               * (byteOrder)----> is the parameter used 
+            **Return Value:
+               * No Returned Value 
+          */
 void SPI_SetBitOrder(uint8_t byteOrder)
 {
    if( byteOrder ==MSBFIRST)
@@ -62,11 +72,15 @@ else if(byteOrder ==LSBFIRST)
 }
 }
 
-/*
-* Select the clock mode wanted and also select the data mode transfered (8_bits or 16_bits)
-*TWO Parameters needed one for (clock mode) and the other (data mode)
-*No returned data
-*/
+       /*
+            **Description:
+               * This function used to select the desired data mode and the clock mode
+            **Parameters:
+               * (mode)----> is the parameter used for data mode transfer (8_bits) or (16_bits) 
+	       * (clockMode)-----> is the second to select the clock mode desired 
+            **Return Value:
+               * No Returned Value 
+          */
 
 void setDataMode(uint8_t mode, uint8_t clockMode) {
 //SELECT DATA MODE
@@ -107,12 +121,14 @@ switch (clockMode)
        break;
 }
 }
-/*
-* Select the frequency divider wanted
-*One Parameter needed
-*No returned data
-*/
-
+        /*
+            **Description:
+               * This function used to select the desired frequency divider 
+            **Parameters:
+               * (freqDivider)----> is the parameter used for choosing the frequency divider desired 
+            **Return Value:
+               * No Returned Value 
+          */
 void setClockDivider(uint8_t freqDivider) {
 
 // Clear previous divider value
@@ -155,11 +171,14 @@ case SPI_DIV256:
 
 }
 }
-/*
-* to disable SPI Bus
-* No parameter nedded
-* No returned data
-*/
+         /*
+            **Description:
+               * This function used to disable SPI1 Bus
+            **Parameters:
+               * No parameter required
+            **Return Value:
+               * No Returned Value 
+          */
 
 void SPI_End(void)
 {
@@ -167,11 +186,14 @@ void SPI_End(void)
 
 }
 
-/*
-* to enable SPI Bus
-* No parameter nedded
-* No returned data
-*/
+        /*
+            **Description:
+               * This function used to enable SPI1 Bus
+            **Parameters:
+               * No parameter required
+            **Return Value:
+               * No Returned Value 
+          */
 
 
 void SPI_Begin(void)
@@ -180,7 +202,14 @@ void SPI_Begin(void)
 
 }
 
-
+         /*
+            **Description:
+               * This function used to send data from master to slave
+            **Parameters:
+               * (DataTransfered)--> is the adrress of data wanted to be sended to slave 
+            **Return Value:
+               * No Returned Value 
+          */
 
 
 void SPI_SendData(uint8_t *DataTransfered)
@@ -190,6 +219,15 @@ void SPI_SendData(uint8_t *DataTransfered)
 	while(!(SPI1_SR&(1<<1)));
 }
 
+         /*
+            **Description:
+               * This function used to receive data from slave to master
+            **Parameters:
+               * (DataTransfered)--> is the adrress of data wanted to be received from master 
+            **Return Value:
+               * No Returned Value 
+          */
+
 void SPI_RecieveData (uint8_t *DataTransfered)
 {
         //For Recieve DATA
@@ -197,6 +235,19 @@ void SPI_RecieveData (uint8_t *DataTransfered)
 	*DataTransfered = SPI1_DR;
 
 }
+
+         /*
+            **Description:
+               * This function include (setDataMode),(setClockDivider)and(SPI_SetBitOrder)
+	         like a setting function 
+            **Parameters:
+                * (byteOrder)----> is the parameter used 
+		*(dataMode)-----> paramter of (setDataMode) function
+                *(clockMode)----->the second paramter of (setDataMode) function
+		*(baudRate)----->the parameter of (setClockDivider) function
+            **Return Value:
+               * No Returned Value 
+          */
 
 void SPI_BeginTransaction(uint8_t byteOrder, uint8_t dataMode, uint8_t baudRate, uint8_t clockMode)
 {
@@ -206,6 +257,16 @@ void SPI_BeginTransaction(uint8_t byteOrder, uint8_t dataMode, uint8_t baudRate,
    SPI_SetBitOrder(byteOrder);
 
 }
+
+        /*
+            **Description:
+               * This function is empty to end 
+            **Parameters:
+               * No parameter required
+            **Return Value:
+               * No Returned Value 
+          */
+
 
 
 void SPI_EndTransaction(void)
