@@ -1,5 +1,5 @@
- #ifndef SPI_H_
-#define SPI_H_
+ #ifndef Header_Master_
+#define Header_Master_
 
 #include<stdint.h>
 
@@ -37,4 +37,4 @@ void SPI_RecieveData(uint8_t *DataTransfered);
 
 
 
-#endif
+#endif 
